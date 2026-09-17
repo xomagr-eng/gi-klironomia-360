@@ -1,0 +1,18 @@
+{
+  "name": "ΓΗ & ΚΛΗΡΟΝΟΜΙΑ 360°",
+  "short_name": "ΓΗ 360°",
+  "description": "Νομικός & διαδικαστικός οδηγός για χωράφια/κτήματα: κτηματολόγιο, γονική/δωρεά, κληρονομιά, δίοδος-δρόμος.",
+  "lang": "el",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e1116",
+  "theme_color": "#0e1116",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

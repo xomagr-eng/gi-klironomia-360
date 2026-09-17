@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ΓΗ &amp; ΚΛΗΡΟΝΟΜΙΑ 360°</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0e1116">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ΓΗ 360°">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+  :root{
+    --bg:#0e1116; --bg2:#151b23; --panel:#1b232d; --panel2:#212c38;
+    --line:#2c3947; --line2:#3a4a5c;
+    --txt:#eef3f8; --muted:#9fb0c2; --dim:#6f8296;
+    --red:#e63329; --red2:#ff5147; --amber:#ffb020; --amber2:#ffce6a;
+    --blue:#3d9be0; --gold:#d9a441;
+    --shadow:0 6px 24px rgba(0,0,0,.45);
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 600px at 80% -10%, #1a2431 0%, var(--bg) 55%) fixed;
+    color:var(--txt);
+    font-family:"Segoe UI",system-ui,Roboto,Arial,sans-serif;
+    font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--amber2)}
+  h1,h2,h3,h4{margin:0 0 .4em;font-weight:700;letter-spacing:.2px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 18px 90px}
+
+  header.top{
+    position:sticky;top:0;z-index:50;
+    background:linear-gradient(180deg,rgba(14,17,22,.98),rgba(14,17,22,.9));
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .top-in{max-width:1240px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding-top:calc(12px + env(safe-area-inset-top));
+    padding-left:calc(18px + env(safe-area-inset-left));
+    padding-right:calc(18px + env(safe-area-inset-right))}
+  .brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+  .logo{
+    width:46px;height:46px;border-radius:12px;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--red),#8f1a14);
+    display:grid;place-items:center;box-shadow:var(--shadow);position:relative;overflow:hidden
+  }
+  .logo svg{width:30px;height:30px}
+  .brand h1{font-size:20px;margin:0;line-height:1.05}
+  .brand .sub{font-size:10.5px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+  nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.tabs button{
+    background:var(--panel);color:var(--muted);border:1px solid var(--line);
+    padding:9px 13px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:600;
+    display:flex;align-items:center;gap:7px;transition:.15s;
+  }
+  nav.tabs button:hover{color:var(--txt);border-color:var(--line2);background:var(--panel2)}
+  nav.tabs button.active{background:linear-gradient(135deg,var(--red),#a01f18);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(230,51,41,.35)}
+  @media(max-width:760px){
+    .top-in{gap:8px}
+    .brand h1{font-size:17px}
+    nav.tabs{flex-wrap:nowrap;overflow-x:auto;margin-left:0;width:100%;
+      padding:2px 2px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    nav.tabs::-webkit-scrollbar{display:none}
+    nav.tabs button{flex:0 0 auto;white-space:nowrap}
+  }
+
+  section.view{display:none;animation:fade .25s ease}
+  section.view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .hero{
+    margin-top:22px;padding:30px;border-radius:var(--r);
+    background:linear-gradient(120deg,#1e2935,#141b23);
+    border:1px solid var(--line);position:relative;overflow:hidden
+  }
+  .hero:before{content:"";position:absolute;inset:0;background:
+     repeating-linear-gradient(45deg,rgba(217,164,65,.05) 0 14px,transparent 14px 28px);pointer-events:none}
+  .hero h2{font-size:30px;margin-bottom:8px;position:relative}
+  .hero p{color:var(--muted);max-width:820px;font-size:15.5px;position:relative}
+  .hero .cta{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;position:relative}
+
+  .btn{border:none;border-radius:11px;padding:13px 20px;font-size:14.5px;font-weight:700;cursor:pointer;
+    display:inline-flex;align-items:center;gap:9px;transition:.15s}
+  .btn.primary{background:linear-gradient(135deg,var(--red),#a01f18);color:#fff;box-shadow:0 4px 16px rgba(230,51,41,.35)}
+  .btn.primary:hover{transform:translateY(-2px)}
+  .btn.ghost{background:var(--panel);color:var(--txt);border:1px solid var(--line2)}
+  .btn.ghost:hover{background:var(--panel2)}
+  .btn.sm{padding:8px 13px;font-size:13px;border-radius:9px}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:920px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+  .card h3{font-size:16.5px;display:flex;align-items:center;gap:9px}
+
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;cursor:pointer;transition:.15s;position:relative}
+  .tile:hover{border-color:var(--red);transform:translateY(-3px);background:var(--panel2)}
+  .tile .big{font-size:32px}
+  .tile h4{margin:10px 0 4px;font-size:16px}
+  .tile p{margin:0;color:var(--muted);font-size:13px}
+
+  .sectitle{margin:30px 0 14px;font-size:22px;display:flex;align-items:center;gap:10px}
+  .sectitle small{font-size:13px;color:var(--muted);font-weight:500}
+
+  .disclaimer{
+    margin-top:18px;background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.35);
+    border-radius:12px;padding:13px 16px;font-size:13px;color:var(--amber2);display:flex;gap:10px;align-items:flex-start
+  }
+  .disclaimer b{color:var(--amber)}
+
+  /* wizard */
+  .wiz-q{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+  .wiz-q h3{font-size:19px;margin-bottom:16px}
+  .opt{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line2);color:var(--txt);
+    padding:15px 17px;border-radius:11px;cursor:pointer;font-size:15px;font-weight:600;margin-bottom:10px;transition:.14s;
+    display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--red);background:var(--panel2);transform:translateX(3px)}
+  .opt .oi{font-size:22px}
+  .opt small{display:block;font-weight:500;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .crumbs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;font-size:12.5px;color:var(--muted)}
+  .crumbs span{background:var(--bg2);border:1px solid var(--line);padding:5px 10px;border-radius:8px}
+
+  /* procedure detail */
+  .proc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:0;box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+  .proc-head{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:.15s}
+  .proc-head:hover{background:var(--panel2)}
+  .proc-head .pem{font-size:28px;flex:0 0 auto}
+  .proc-head h3{margin:0;font-size:17px}
+  .proc-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+  .proc-head .arr{margin-left:auto;color:var(--dim);font-size:20px;transition:.2s}
+  .proc.open .arr{transform:rotate(90deg);color:var(--red2)}
+  .proc-body{display:none;padding:0 20px 20px;border-top:1px solid var(--line)}
+  .proc.open .proc-body{display:block;animation:fade .2s}
+
+  .tagrow{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .tag{font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:20px;border:1px solid var(--line2);color:var(--muted)}
+  .tag.cost{color:var(--amber2);border-color:rgba(255,176,32,.4)}
+  .tag.time{color:var(--blue);border-color:rgba(61,155,224,.4)}
+  .tag.diff{color:var(--red2);border-color:rgba(255,81,71,.4)}
+
+  .block{margin-top:16px}
+  .block > h4{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px;
+    display:flex;align-items:center;gap:8px;border-left:3px solid var(--red);padding-left:10px}
+  ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:st}
+  ol.steps li{position:relative;padding:10px 0 10px 44px;border-bottom:1px dashed var(--line);counter-increment:st}
+  ol.steps li:last-child{border-bottom:none}
+  ol.steps li:before{content:counter(st);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;
+    background:linear-gradient(135deg,var(--red),#8f1a14);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+  ol.steps li b{color:var(--txt)}
+  ul.plain{margin:0;padding-left:0;list-style:none}
+  ul.plain li{padding:7px 0 7px 26px;position:relative;border-bottom:1px dashed var(--line);font-size:14px}
+  ul.plain li:last-child{border-bottom:none}
+  ul.plain li:before{content:"▪";position:absolute;left:6px;color:var(--red2);font-size:16px;top:6px}
+
+  .who{display:flex;gap:10px;flex-wrap:wrap}
+  .who .wtag{background:var(--bg2);border:1px solid var(--line2);border-radius:10px;padding:8px 12px;font-size:13px;font-weight:600;
+    display:flex;align-items:center;gap:7px;cursor:pointer}
+  .who .wtag:hover{border-color:var(--red)}
+
+  .warn{background:rgba(230,51,41,.09);border:1px solid rgba(230,51,41,.35);border-radius:10px;padding:11px 14px;font-size:13.5px;color:#ffb3ad;margin-top:8px;display:flex;gap:9px;align-items:flex-start}
+  .warn .wi{flex:0 0 auto}
+
+  /* checklist */
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px;cursor:pointer}
+  .chk:last-child{border-bottom:none}
+  .chk input{width:19px;height:19px;accent-color:var(--red);margin-top:1px;flex:0 0 auto;cursor:pointer}
+  .chk.done span{text-decoration:line-through;color:var(--dim)}
+
+  /* directory */
+  .dir{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+  .dir h3{font-size:17px;display:flex;align-items:center;gap:10px}
+  .dir .role{font-size:12px;color:var(--amber2);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+
+  /* calculators */
+  .field{margin-bottom:15px}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:7px}
+  .field .hint{font-weight:500;color:var(--dim);font-size:11.5px}
+  input[type=number],input[type=text],select{
+    width:100%;background:var(--bg2);border:1px solid var(--line2);color:var(--txt);
+    padding:12px 13px;border-radius:10px;font-size:15px;font-family:inherit}
+  input:focus,select:focus{outline:none;border-color:var(--red)}
+  .result{margin-top:16px;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line2);border-radius:12px;padding:18px}
+  .result .rv{font-size:30px;font-weight:800;color:var(--red2)}
+  .result .rl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .result table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+  .result td{padding:6px 4px;border-bottom:1px solid var(--line)}
+  .result td:last-child{text-align:right;font-weight:700}
+
+  /* glossary */
+  .term{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+  .term b{color:var(--amber2);font-size:15px}
+  .term p{margin:5px 0 0;color:var(--muted);font-size:13.5px}
+
+  .searchbar{width:100%;margin-bottom:16px}
+  .footer{margin-top:40px;text-align:center;color:var(--dim);font-size:12px;line-height:1.7}
+  mark{background:rgba(255,176,32,.3);color:var(--txt);padding:0 2px;border-radius:3px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand" onclick="go('home')">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg>
+      </div>
+      <div>
+        <h1>ΓΗ &amp; ΚΛΗΡΟΝΟΜΙΑ 360°</h1>
+        <div class="sub">Νομικός Οδηγός Ακινήτων &amp; Αγροτεμαχίων</div>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button data-v="home" class="active" onclick="go('home')">🏠 Αρχική</button>
+      <button data-v="wizard" onclick="go('wizard')">🧭 Οδηγός</button>
+      <button data-v="procs" onclick="go('procs')">📋 Διαδικασίες</button>
+      <button data-v="dir" onclick="go('dir')">👥 Ποιους να βρω</button>
+      <button data-v="calc" onclick="go('calc')">🧮 Υπολογιστές</button>
+      <button data-v="glo" onclick="go('glo')">📖 Λεξικό</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- HOME -->
+<section id="home" class="view active">
+  <div class="hero">
+    <h2>Ό,τι πρέπει να κάνεις με τη γη σου — βήμα-βήμα</h2>
+    <p>Κτηματολόγιο, μεταβίβαση σε παιδί, δωρεά, διαθήκη &amp; κληρονομιά, άνοιγμα δρόμου/δίοδος όταν μεσολαβούν άλλα χωράφια, τακτοποίηση τίτλων. Σου λέει <b>τι διαδικασία χρειάζεσαι, ποια χαρτιά, ποιον επαγγελματία ή υπηρεσία να βρεις, πόσο κοστίζει και πόσο κρατάει</b>.</p>
+    <div class="cta">
+      <button class="btn primary" onclick="go('wizard')">🧭 Ξεκίνα τον Οδηγό — δεν ξέρω τι χρειάζομαι</button>
+      <button class="btn ghost" onclick="go('procs')">📋 Ξέρω τι θέλω — δες όλες τις διαδικασίες</button>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <span>⚠️</span>
+    <div><b>Ενημερωτικό εργαλείο — όχι νομική συμβουλή.</b> Οι διαδικασίες, τα ποσά, οι φόροι και οι προθεσμίες αλλάζουν και εξαρτώνται από την περίπτωσή σου. Για κάθε πράξη επιβεβαίωσε με <b>συμβολαιογράφο / δικηγόρο / τοπογράφο</b> και τις αρμόδιες υπηρεσίες. Δεν αντικαθιστά τον επαγγελματία.</div>
+  </div>
+
+  <h3 class="sectitle">🔎 Δημοφιλή ζητήματα</h3>
+  <div class="grid g3" id="homeTiles"></div>
+
+  <h3 class="sectitle">👥 Ποιους ανθρώπους &amp; υπηρεσίες θα χρειαστείς</h3>
+  <div class="grid g4" id="homeWho"></div>
+</section>
+
+<!-- WIZARD -->
+<section id="wizard" class="view">
+  <h3 class="sectitle">🧭 Οδηγός — Τι θέλεις να κάνεις;</h3>
+  <div id="wizArea"></div>
+</section>
+
+<!-- PROCEDURES -->
+<section id="procs" class="view">
+  <h3 class="sectitle">📋 Όλες οι διαδικασίες <small>πάτα για ανάπτυξη · οι επιλογές (checklist) αποθηκεύονται</small></h3>
+  <input class="searchbar" id="procSearch" placeholder="🔍 Αναζήτηση (π.χ. δωρεά, δρόμος, διαθήκη, πρόδηλο σφάλμα)..." oninput="renderProcs(this.value)">
+  <div id="procList"></div>
+</section>
+
+<!-- DIRECTORY -->
+<section id="dir" class="view">
+  <h3 class="sectitle">👥 Ποιους ανθρώπους &amp; υπηρεσίες να βρεις</h3>
+  <p style="color:var(--muted);margin-top:-6px">Ποιος κάνει τι, πότε τον χρειάζεσαι και τι να ζητήσεις.</p>
+  <div class="grid g2" id="dirList"></div>
+</section>
+
+<!-- CALCULATORS -->
+<section id="calc" class="view">
+  <h3 class="sectitle">🧮 Υπολογιστές φόρων &amp; εξόδων <small>κατά προσέγγιση</small></h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3>👨‍👧 Γονική παροχή / Δωρεά σε παιδί</h3>
+      <p style="color:var(--muted);font-size:13px">Α' κατηγορία συγγένειας (τέκνα, σύζυγος, γονείς).</p>
+      <div class="field"><label>Αξία ακινήτου (αντικειμενική ή αγοραία, €)</label><input type="number" id="gpVal" value="120000" oninput="calcGP()"></div>
+      <div class="field"><label>Έχεις ήδη λάβει προηγούμενες δωρεές/γονικές από τον ίδιο; (€)<span class="hint"> συνυπολογίζονται στο αφορολόγητο</span></label><input type="number" id="gpPrev" value="0" oninput="calcGP()"></div>
+      <div class="result" id="gpRes"></div>
+    </div>
+
+    <div class="card">
+      <h3>⚰️ Φόρος κληρονομιάς</h3>
+      <p style="color:var(--muted);font-size:13px">Ανά κληρονόμο, βάσει κατηγορίας συγγένειας.</p>
+      <div class="field"><label>Αξία μεριδίου κληρονόμου (€)</label><input type="number" id="klVal" value="200000" oninput="calcKL()"></div>
+      <div class="field"><label>Κατηγορία συγγένειας</label>
+        <select id="klCat" onchange="calcKL()">
+          <option value="A">Α' — τέκνα, σύζυγος, γονείς, εγγόνια</option>
+          <option value="B">Β' — αδέλφια, ανίψια, παππούδες, πεθερικά</option>
+          <option value="C">Γ' — λοιποί συγγενείς &amp; τρίτοι</option>
+        </select>
+      </div>
+      <div class="result" id="klRes"></div>
+    </div>
+
+    <div class="card">
+      <h3>🏷️ Φόρος Μεταβίβασης (αγοραπωλησία)</h3>
+      <p style="color:var(--muted);font-size:13px">ΦΜΑ επί της μεγαλύτερης αξίας (τίμημα ή αντικειμενική).</p>
+      <div class="field"><label>Αξία μεταβίβασης (€)</label><input type="number" id="fmaVal" value="90000" oninput="calcFMA()"></div>
+      <div class="result" id="fmaRes"></div>
+    </div>
+
+    <div class="card">
+      <h3>📐 Εκτίμηση εξόδων συμβολαίου</h3>
+      <p style="color:var(--muted);font-size:13px">Χονδρική εκτίμηση παρεπόμενων εξόδων (χωρίς τον φόρο).</p>
+      <div class="field"><label>Αξία ακινήτου (€)</label><input type="number" id="exVal" value="90000" oninput="calcEX()"></div>
+      <div class="result" id="exRes"></div>
+    </div>
+  </div>
+  <div class="disclaimer" style="margin-top:18px"><span>⚠️</span><div>Τα αφορολόγητα, οι συντελεστές και τα έξοδα (συμβολαιογράφος, δικηγόρος, υποθηκοφυλακείο/κτηματολόγιο, τοπογράφος) <b>αλλάζουν και διαφέρουν</b>. Χρησιμοποίησέ τα μόνο ως τάξη μεγέθους και ζήτα ακριβή προϋπολογισμό.</div></div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glo" class="view">
+  <h3 class="sectitle">📖 Λεξικό όρων</h3>
+  <input class="searchbar" id="gloSearch" placeholder="🔍 Αναζήτηση όρου..." oninput="renderGlo(this.value)">
+  <div id="gloList"></div>
+</section>
+
+<div class="footer">
+  ΓΗ &amp; ΚΛΗΡΟΝΟΜΙΑ 360° · Λειτουργεί εντελώς offline · Τα δεδομένα (checklist) μένουν μόνο στη συσκευή σου.<br>
+  Ενημερωτικό εργαλείο — δεν υποκαθιστά τη συμβουλή δικηγόρου / συμβολαιογράφου / μηχανικού.
+</div>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const PEOPLE = {
+  notary:{icon:"📜",name:"Συμβολαιογράφος",role:"Καταρτίζει τη συμβολαιογραφική πράξη",
+    what:"Συντάσσει και υπογράφει τα συμβόλαια (πώληση, δωρεά, γονική παροχή, αποδοχή κληρονομιάς, σύσταση δουλείας). Κάθε μεταβίβαση ακινήτου γίνεται υποχρεωτικά με συμβολαιογραφικό έγγραφο.",
+    when:"Σε κάθε μεταβίβαση/δωρεά/γονική παροχή, δημόσια διαθήκη, αποδοχή κληρονομιάς, σύσταση δουλείας διόδου.",
+    ask:"Κατάλογο δικαιολογητικών, εκτίμηση αμοιβής & εξόδων, ποιος αναλαμβάνει τη δήλωση φόρου και τη μεταγραφή/καταχώριση.",
+    link:"https://enotariat.gr",linkLabel:"Εύρεση συμβολαιογράφου (enotariat.gr)"},
+  lawyer:{icon:"⚖️",name:"Δικηγόρος",role:"Νομικός έλεγχος & εκπροσώπηση",
+    what:"Ελέγχει τίτλους, κάνει έλεγχο στο υποθηκοφυλακείο/κτηματολόγιο, συντάσσει αγωγές/ενστάσεις, χειρίζεται κληρονομικά, διεκδικήσεις, δουλείες, διαφορές ορίων.",
+    when:"Σε αμφισβήτηση, αγωγή, ένσταση κτηματολογίου, περίπλοκη κληρονομιά, δικαστική διεκδίκηση διόδου, έλεγχο τίτλων πριν αγορά.",
+    ask:"Έλεγχο τίτλων/βαρών, προθεσμίες, πιθανότητες & κόστος δικαστικής οδού έναντι εξωδικαστικής.",
+    link:"https://www.olomeleia.gr",linkLabel:"Ολομέλεια Δικηγορικών Συλλόγων"},
+  surveyor:{icon:"📐",name:"Τοπογράφος Μηχανικός",role:"Μετρήσεις, διαγράμματα, όρια",
+    what:"Συντάσσει τοπογραφικό διάγραμμα (με συντεταγμένες ΕΓΣΑ87), εξαρτημένο για συμβόλαια/κτηματολόγιο, εντοπίζει το ακίνητο, ελέγχει όρια, εμβαδά, αρτιότητα, δουλείες.",
+    when:"Σχεδόν πάντα: μεταβίβαση, δήλωση/διόρθωση κτηματολογίου, δρόμος/δίοδος, αμφισβήτηση ορίων, κατάτμηση.",
+    ask:"Εξαρτημένο τοπογραφικό ΕΓΣΑ87, έλεγχο ταύτισης με το κτηματολόγιο, βεβαίωση αρτιότητας/όρων δόμησης.",
+    link:"https://www.tee.gr",linkLabel:"Τεχνικό Επιμελητήριο Ελλάδας (ΤΕΕ)"},
+  civeng:{icon:"🏗️",name:"Μηχανικός (Πολ. Μηχ./Αρχ.)",role:"Δηλώσεις μηχανικού, τακτοποιήσεις",
+    what:"Εκδίδει βεβαίωση μηχανικού για μεταβίβαση (ότι δεν υπάρχει αυθαίρετο), τακτοποιεί αυθαίρετα, ηλεκτρονική ταυτότητα κτιρίου, άδειες.",
+    when:"Όταν υπάρχει κτίσμα στο ακίνητο (αποθήκη, σπίτι, στάβλος) πριν από κάθε μεταβίβαση.",
+    ask:"Βεβαίωση μηχανικού Ν.4495/όπως ισχύει, τυχόν τακτοποίηση αυθαιρέτου & κόστος, ηλεκτρονική ταυτότητα.",
+    link:"https://www.tee.gr",linkLabel:"Τεχνικό Επιμελητήριο Ελλάδας (ΤΕΕ)"},
+  ktim:{icon:"🗺️",name:"Κτηματολογικό Γραφείο",role:"Καταχώριση δικαιωμάτων στη γη",
+    what:"Τηρεί τα κτηματολογικά στοιχεία. Εκεί κάνεις δήλωση, καταχώριση πράξεων, αίτηση διόρθωσης πρόδηλου σφάλματος, λαμβάνεις κτηματογραφικά αποσπάσματα/πιστοποιητικά.",
+    when:"Πρώτη εγγραφή, διόρθωση στοιχείων, καταχώριση συμβολαίου/αποδοχής, έκδοση αποσπάσματος & διαγράμματος.",
+    ask:"Κτηματολογικό απόσπασμα & διάγραμμα, ΚΑΕΚ, κατάσταση εγγραφών, τυχόν εκκρεμείς διορθώσεις.",
+    link:"https://www.ktimatologio.gr",linkLabel:"Ελληνικό Κτηματολόγιο"},
+  doy:{icon:"🏛️",name:"ΔΟΥ / Εφορία (ΑΑΔΕ)",role:"Φόροι μεταβίβασης/δωρεάς/κληρονομιάς",
+    what:"Υποβάλλεις δηλώσεις φόρου (ΦΜΑ, δωρεάς/γονικής, κληρονομιάς), λαμβάνεις πιστοποιητικό ΕΝΦΙΑ, φορολογική ενημερότητα. Πολλά γίνονται πλέον ηλεκτρονικά (myPROPERTY).",
+    when:"Πριν την υπογραφή του συμβολαίου (δήλωση φόρου) και για την αποδοχή κληρονομιάς.",
+    ask:"Πιστοποιητικό ΕΝΦΙΑ (ότι δηλώθηκε 5ετία), βεβαίωση καταβολής/απαλλαγής φόρου, ενημερότητα.",
+    link:"https://www.aade.gr/polites/myproperty",linkLabel:"ΑΑΔΕ — myPROPERTY"},
+  court:{icon:"🏤",name:"Ειρηνοδικείο / Δικαστήριο",role:"Διαθήκες, κληρονομητήρια, διαφορές",
+    what:"Δημοσίευση διαθήκης, έκδοση κληρονομητηρίου, αποποίηση κληρονομιάς, αγωγές διόδου/ορίων, ένδικα μέσα κατά κτηματολογικών εγγραφών.",
+    when:"Θάνατος κληρονομουμένου (δημοσίευση/αποποίηση), δικαστική διεκδίκηση δίοδου, διόρθωση ανακριβούς εγγραφής.",
+    ask:"Προθεσμίες (π.χ. αποποίηση), απαιτούμενα έγγραφα, αν χωράει εκούσια ή αμφισβητούμενη διαδικασία.",
+    link:"https://www.gov.gr/ipiresies/dikaiosune",linkLabel:"gov.gr — Δικαιοσύνη"},
+  forest:{icon:"🌲",name:"Δασαρχείο / Δασ. Χάρτες",role:"Χαρακτηρισμός έκτασης",
+    what:"Ελέγχεις αν η έκταση χαρακτηρίζεται δασική ή αγροτική στους δασικούς χάρτες. Κρίσιμο για δόμηση, δρόμο, μεταβίβαση.",
+    when:"Όταν το χωράφι είναι εκτός σχεδίου, με δέντρα, ή γειτνιάζει με δάσος· πριν ανοίξεις δρόμο ή χτίσεις.",
+    ask:"Απόσπασμα κυρωμένου δασικού χάρτη, τυχόν αντιρρήσεις, βεβαίωση χαρακτηρισμού.",
+    link:"https://www.ktimatologio.gr/dasikoi-chartes",linkLabel:"Δασικοί Χάρτες"},
+  muni:{icon:"🏢",name:"Δήμος / Πολεοδομία",role:"Δρόμοι, όροι δόμησης, χρήσεις γης",
+    what:"Αρμόδιοι για κοινοτικούς/αγροτικούς δρόμους, όρους δόμησης, χρήσεις γης, άδειες μικρών έργων, πράξεις εφαρμογής.",
+    when:"Άνοιγμα/διάνοιξη δρόμου, πρόσβαση από κοινοτικό δρόμο, έλεγχος αρτιότητας/όρων.",
+    ask:"Αν υπάρχει θεσμοθετημένος δρόμος πρόσβασης, όρους δόμησης της περιοχής, αρμοδιότητα για διάνοιξη.",
+    link:"https://www.gov.gr",linkLabel:"gov.gr — Δημόσιες υπηρεσίες"}
+};
+
+const RESOURCES=[
+  {icon:"🗺️",name:"Ελληνικό Κτηματολόγιο",url:"https://www.ktimatologio.gr",desc:"Χάρτες, ΚΑΕΚ, αποσπάσματα, δηλώσεις & διορθώσεις."},
+  {icon:"🏛️",name:"ΑΑΔΕ — myPROPERTY",url:"https://www.aade.gr/polites/myproperty",desc:"Ηλεκτρονικές δηλώσεις φόρου δωρεάς/γονικής/κληρονομιάς & ΦΜΑ."},
+  {icon:"🌲",name:"Δασικοί Χάρτες",url:"https://www.ktimatologio.gr/dasikoi-chartes",desc:"Έλεγχος αν η έκταση είναι δασική ή αγροτική."},
+  {icon:"🇬🇷",name:"gov.gr",url:"https://www.gov.gr",desc:"Πύλη δημόσιων υπηρεσιών (πιστοποιητικά, υπεύθυνες δηλώσεις)."},
+  {icon:"📜",name:"Συμβολαιογράφοι",url:"https://enotariat.gr",desc:"Εύρεση συμβολαιογράφου κατά περιοχή."},
+  {icon:"⚖️",name:"Ολομέλεια Δικηγόρων",url:"https://www.olomeleia.gr",desc:"Δικηγορικοί σύλλογοι — εύρεση δικηγόρου."},
+  {icon:"📐",name:"ΤΕΕ",url:"https://www.tee.gr",desc:"Τεχνικό Επιμελητήριο — μητρώο μηχανικών/τοπογράφων."}
+];
+
+const PROCEDURES = [
+ {id:"ktim-first", cat:"Κτηματολόγιο", icon:"🗺️", title:"Δήλωση στο Κτηματολόγιο (πρώτη εγγραφή)",
+  sub:"Δήλωσε το ακίνητό σου στην κτηματογράφηση ή διόρθωσε ελλιπή εγγραφή",
+  cost:"€35 τέλος/δικαίωμα + τοπογραφικό", time:"1–3 μήνες", diff:"Μέτριο",
+  steps:[
+    "Βρες τους <b>τίτλους ιδιοκτησίας</b> σου (συμβόλαιο, αποδοχή κληρονομιάς, δωρεά) και τα πιστοποιητικά μεταγραφής από το υποθηκοφυλακείο.",
+    "Εντόπισε το ακίνητο στον <b>χάρτη κτηματογράφησης</b> (ktimatologio.gr) — πάρε τον προσωρινό ΚΑΕΚ.",
+    "Αν δεν ταυτίζονται όρια/εμβαδό, ζήτα <b>τοπογραφικό διάγραμμα ΕΓΣΑ87</b> από τοπογράφο.",
+    "Υπόβαλε τη <b>δήλωση Δ1</b> (ηλεκτρονικά ή στο Γραφείο Κτηματογράφησης) με τα δικαιολογητικά.",
+    "Πλήρωσε το <b>πάγιο τέλος κτηματογράφησης</b> ανά δικαίωμα.",
+    "Παρακολούθησε αν η εγγραφή έγινε σωστά· αν όχι, κάνε <b>διόρθωση/ένσταση</b> εντός της προθεσμίας."
+  ],
+  docs:["Τίτλος κτήσης (συμβόλαιο/αποδοχή/δωρεά)","Πιστοποιητικό μεταγραφής","Τοπογραφικό (αν ζητηθεί)","ΑΦΜ & στοιχεία ταυτότητας","Ε9 (βοηθητικά)"],
+  who:["ktim","surveyor","lawyer"],
+  warn:"Αν χάσεις τις προθεσμίες, οι «πρώτες εγγραφές» μπορεί να οριστικοποιηθούν λανθασμένα και η διόρθωση γίνεται πιο δύσκολη/δικαστική."},
+
+ {id:"ktim-fix", cat:"Κτηματολόγιο", icon:"✏️", title:"Διόρθωση σφάλματος στο Κτηματολόγιο",
+  sub:"Λάθος όνομα, εμβαδό, όρια, ή εγγραφή σε λάθος πρόσωπο («ανακριβής εγγραφή»)",
+  cost:"€ ανά περίπτωση", time:"1–8 μήνες", diff:"Ποικίλλει",
+  steps:[
+    "Πάρε <b>κτηματολογικό απόσπασμα & διάγραμμα</b> και δες ακριβώς τι είναι λάθος.",
+    "Αν είναι απλό/προφανές λάθος (π.χ. ορθογραφικό, στοιχεία): αίτηση <b>διόρθωσης πρόδηλου σφάλματος</b> στο Κτηματολογικό Γραφείο.",
+    "Αν αφορά όρια/εμβαδό: <b>τοπογραφικό</b> + αίτηση γεωμετρικής μεταβολής.",
+    "Αν το δικαίωμα εμφανίζεται σε <b>λάθος πρόσωπο</b> ή «άγνωστου ιδιοκτήτη»: χρειάζεται νομική οδός (αίτηση/αγωγή διόρθωσης ανακριβούς εγγραφής) — με δικηγόρο.",
+    "Κατέθεσε τα δικαιολογητικά, παρακολούθησε την πορεία και λάβε το διορθωμένο απόσπασμα."
+  ],
+  docs:["Κτηματολογικό απόσπασμα & διάγραμμα","Τίτλοι που αποδεικνύουν το σωστό","Τοπογραφικό (για όρια/εμβαδό)","Πιστοποιητικά μεταγραφής"],
+  who:["ktim","surveyor","lawyer"],
+  warn:"Η «αγωγή του άρθρου 6» κατά ανακριβούς εγγραφής έχει αποκλειστική προθεσμία. Μη χρονοτριβείς — ρώτα δικηγόρο άμεσα."},
+
+ {id:"gpar", cat:"Μεταβίβαση", icon:"👨‍👧", title:"Γονική παροχή σε παιδί",
+  sub:"Δίνεις το χωράφι/ακίνητο στο παιδί σου όσο ζεις — ευνοϊκή φορολογικά",
+  cost:"Φόρος (αφορολόγητο έως 800.000€) + έξοδα συμβολαίου", time:"2–6 εβδομάδες", diff:"Εύκολο–Μέτριο",
+  steps:[
+    "Μάζεψε <b>τίτλο κτήσης</b>, τοπογραφικό, πιστοποιητικά (ΕΝΦΙΑ, μη οφειλής, κτηματολογικό απόσπασμα).",
+    "Αν υπάρχει κτίσμα: <b>βεβαίωση μηχανικού</b> ότι δεν υπάρχει αυθαίρετο.",
+    "Ο συμβολαιογράφος συντάσσει το προσχέδιο· υποβάλλεται <b>δήλωση φόρου δωρεάς/γονικής (myPROPERTY)</b>.",
+    "Υπογραφή του <b>συμβολαίου γονικής παροχής</b> (χρειάζεται και δικηγόρος συχνά).",
+    "<b>Μεταγραφή/καταχώριση</b> στο Κτηματολόγιο/Υποθηκοφυλακείο στο όνομα του παιδιού.",
+    "Ενημέρωση <b>Ε9</b> και των δύο."
+  ],
+  docs:["Τίτλος κτήσης + πιστοποιητικό μεταγραφής","Τοπογραφικό ΕΓΣΑ87","Κτηματολογικό απόσπασμα","Πιστοποιητικό ΕΝΦΙΑ (5ετίας)","Βεβαίωση μηχανικού (αν υπάρχει κτίσμα)","Ταυτότητες & ΑΦΜ"],
+  who:["notary","surveyor","doy","civeng","ktim"],
+  warn:"Το αφορολόγητο των 800.000€ ισχύει για συγγενείς Α' κατηγορίας και είναι αθροιστικό (μαζί με προηγούμενες δωρεές). Πάνω από αυτό, φόρος 10%. Πρόσεξε τυχόν επικαρπία που κρατάς."},
+
+ {id:"donation", cat:"Μεταβίβαση", icon:"🎁", title:"Δωρεά ακινήτου",
+  sub:"Δωρεά σε συγγενή ή τρίτο (χωρίς αντάλλαγμα)",
+  cost:"Φόρος βάσει κατηγορίας συγγένειας + έξοδα", time:"2–6 εβδομάδες", diff:"Εύκολο–Μέτριο",
+  steps:[
+    "Ίδια δικαιολογητικά με τη μεταβίβαση (τίτλος, τοπογραφικό, ΕΝΦΙΑ, κτηματολογικό, βεβαίωση μηχανικού αν υπάρχει κτίσμα).",
+    "Καθορισμός <b>κατηγορίας συγγένειας</b> του δωρεοδόχου — καθορίζει το αφορολόγητο & τον συντελεστή.",
+    "Δήλωση <b>φόρου δωρεάς (myPROPERTY)</b>.",
+    "Υπογραφή <b>συμβολαίου δωρεάς</b> στον συμβολαιογράφο.",
+    "<b>Καταχώριση/μεταγραφή</b> & ενημέρωση Ε9."
+  ],
+  docs:["Τίτλος κτήσης + μεταγραφή","Τοπογραφικό","Κτηματολογικό απόσπασμα","Πιστοποιητικό ΕΝΦΙΑ","Βεβαίωση μηχανικού (αν υπάρχει κτίσμα)"],
+  who:["notary","surveyor","doy","ktim"],
+  warn:"Δωρεά σε τρίτους (Γ' κατηγορία) φορολογείται πολύ βαρύτερα από γονική/Α' κατηγορία. Προσοχή και στη «νόμιμη μοίρα» — μεγάλες δωρεές μπορούν να προσβληθούν από κληρονόμους."},
+
+ {id:"sale", cat:"Μεταβίβαση", icon:"🏷️", title:"Αγοραπωλησία (πώληση/αγορά)",
+  sub:"Πουλάς ή αγοράζεις χωράφι — τι πρέπει να ελέγξεις",
+  cost:"ΦΜΑ 3% + έξοδα (αγοραστής)", time:"3–8 εβδομάδες", diff:"Μέτριο",
+  steps:[
+    "<b>Έλεγχος τίτλων & βαρών</b> στο υποθηκοφυλακείο/κτηματολόγιο (δικηγόρος) — υποθήκες, κατασχέσεις, διεκδικήσεις.",
+    "Τοπογραφικό, βεβαίωση μηχανικού (αν κτίσμα), πιστοποιητικά ΕΝΦΙΑ/μη οφειλής.",
+    "Δήλωση <b>ΦΜΑ</b> από τον αγοραστή (myPROPERTY) — φόρος 3% επί της μεγαλύτερης αξίας.",
+    "Υπογραφή <b>συμβολαίου αγοραπωλησίας</b>.",
+    "<b>Μεταγραφή/καταχώριση</b> στο όνομα του αγοραστή, ενημέρωση Ε9."
+  ],
+  docs:["Τίτλος κτήσης πωλητή + μεταγραφή","Τοπογραφικό ΕΓΣΑ87","Κτηματολογικό απόσπασμα","Πιστοποιητικό ΕΝΦΙΑ","Φορολογική & ασφαλιστική ενημερότητα πωλητή","Βεβαίωση μηχανικού (αν κτίσμα)","Βεβαίωση δασικού χαρακτήρα (εκτός σχεδίου)"],
+  who:["lawyer","notary","surveyor","doy","forest","ktim"],
+  warn:"ΠΟΤΕ μην αγοράσεις χωρίς έλεγχο τίτλων & δασικού χαρακτηρισμού. Χωράφι που είναι «δασικό» δεν χτίζεται και μεταβιβάζεται με περιορισμούς."},
+
+ {id:"will", cat:"Κληρονομιά", icon:"📝", title:"Σύνταξη διαθήκης",
+  sub:"Καθόρισε εσύ ποιος παίρνει τι μετά τον θάνατό σου",
+  cost:"Ιδιόγραφη: €0 · Δημόσια: αμοιβή συμβολαιογράφου", time:"Άμεσο", diff:"Εύκολο",
+  steps:[
+    "Αποφάσισε <b>τι είδος διαθήκης</b>: ιδιόγραφη (γράφεις μόνος σου με το χέρι, χρονολογία, υπογραφή), δημόσια (στον συμβολαιογράφο με μάρτυρες), ή μυστική.",
+    "Λάβε υπόψη τη <b>νόμιμη μοίρα</b>: τέκνα/σύζυγος/γονείς δικαιούνται υποχρεωτικό ποσοστό — δεν μπορείς να τους αποκληρώσεις ελεύθερα.",
+    "Για <b>ιδιόγραφη</b>: γράψ' την ολόκληρη με το χέρι σου, βάλε ημερομηνία & υπογραφή, φύλαξέ την ασφαλή (ή κατάθεσέ την σε συμβολαιογράφο).",
+    "Για <b>δημόσια</b>: πήγαινε σε συμβολαιογράφο· καταχωρίζεται και είναι δυσκολότερο να αμφισβητηθεί/χαθεί.",
+    "Μπορείς να την <b>ανακαλέσεις/αλλάξεις</b> όποτε θέλεις με νεότερη."
+  ],
+  docs:["Ταυτότητα","Στοιχεία περιουσίας (ακίνητα, ΚΑΕΚ)","Στοιχεία κληρονόμων"],
+  who:["notary","lawyer"],
+  warn:"Η ιδιόγραφη πρέπει να είναι ΟΛΗ χειρόγραφη (όχι δακτυλογραφημένη) αλλιώς είναι άκυρη. Μην παραβιάζεις τη νόμιμη μοίρα — προσβάλλεται."},
+
+ {id:"inherit", cat:"Κληρονομιά", icon:"⚰️", title:"Αποδοχή κληρονομιάς",
+  sub:"Πέθανε συγγενής και κληρονομείς χωράφι/ακίνητο",
+  cost:"Φόρος κληρονομιάς (αφορ. 150.000€ Α') + έξοδα", time:"1–4 μήνες", diff:"Μέτριο",
+  steps:[
+    "Βρες αν υπάρχει <b>διαθήκη</b> (αναζήτηση στο Ειρηνοδικείο/συμβολαιογράφους)· αν ναι, δημοσιεύεται.",
+    "<b>Προθεσμία-κλειδί:</b> αν θέλεις να <b>αποποιηθείς</b> (π.χ. χρέη), έχεις 4 μήνες από τον θάνατο/γνώση (1 χρόνος αν μένεις εξωτερικό). Αν δεν κάνεις τίποτα, θεωρείται ότι αποδέχτηκες.",
+    "Μάζεψε: <b>ληξιαρχική πράξη θανάτου</b>, πιστοποιητικό εγγυτέρων συγγενών, τίτλους του θανόντος, Ε9.",
+    "Υπόβαλε <b>δήλωση φόρου κληρονομιάς</b> στη ΔΟΥ/myPROPERTY.",
+    "Υπογραφή <b>πράξης αποδοχής κληρονομιάς</b> στον συμβολαιογράφο.",
+    "<b>Μεταγραφή/καταχώριση</b> στο Κτηματολόγιο στο όνομά σου· ενημέρωση Ε9. (Ίσως χρειαστείς <b>κληρονομητήριο</b>.)"
+  ],
+  docs:["Ληξιαρχική πράξη θανάτου","Πιστοποιητικό εγγυτέρων συγγενών","Πιστοποιητικό περί μη δημοσίευσης/δημοσίευσης διαθήκης","Τίτλοι κτήσης θανόντος","Ε9 θανόντος","Κτηματολογικά αποσπάσματα"],
+  who:["notary","lawyer","doy","court","ktim"],
+  warn:"Η προθεσμία αποποίησης (4 μήνες) είναι κρίσιμη αν ο θανών είχε χρέη — αλλιώς κληρονομείς και τα χρέη. Αν κληρονομεί ανήλικος, χρειάζεται ειδική διαδικασία."},
+
+ {id:"disclaim", cat:"Κληρονομιά", icon:"🚫", title:"Αποποίηση κληρονομιάς",
+  sub:"Δεν θέλεις την κληρονομιά (συνήθως λόγω χρεών)",
+  cost:"Μικρό (δικαστικά + δικηγόρος)", time:"Εντός 4 μηνών", diff:"Μέτριο — προθεσμία",
+  steps:[
+    "Υπολόγισε αν το ενεργητικό υπερβαίνει τα χρέη· αν όχι, σκέψου αποποίηση.",
+    "Κατάθεσε <b>δήλωση αποποίησης</b> στη γραμματεία του Ειρηνοδικείου της κληρονομιάς <b>εντός 4 μηνών</b> από τη γνώση (1 έτος αν κατοικείς εξωτερικό).",
+    "Πρόσεξε: με την αποποίηση, η κληρονομιά περνά στην <b>επόμενη τάξη</b> συγγενών (π.χ. παιδιά σου) — ενημέρωσέ τους να αποποιηθούν κι εκείνοι αν χρειάζεται.",
+    "Για <b>ανήλικα τέκνα</b> χρειάζεται άδεια δικαστηρίου για αποποίηση."
+  ],
+  docs:["Ληξιαρχική πράξη θανάτου","Πιστοποιητικό συγγένειας","Στοιχεία ταυτότητας"],
+  who:["court","lawyer"],
+  warn:"Αν χάσεις την 4μηνη προθεσμία, θεωρείσαι ότι αποδέχτηκες — και τα χρέη. Ενέργησε ΑΜΕΣΑ μετά τον θάνατο/τη γνώση."},
+
+ {id:"road", cat:"Πρόσβαση", icon:"🛤️", title:"Άνοιγμα δρόμου / δικαίωμα διόδου (περίκλειστο)",
+  sub:"Το χωράφι σου δεν έχει πρόσβαση σε δημόσιο δρόμο — μεσολαβούν ξένα κτήματα",
+  cost:"Αποζημίωση γείτονα + έξοδα/δικαστικά", time:"Εβδομάδες–μήνες", diff:"Δύσκολο",
+  steps:[
+    "Επιβεβαίωσε ότι το ακίνητο είναι <b>«περίκλειστο»</b> (στερείται αναγκαίας διόδου προς δημόσια/κοινοτικό δρόμο) — με <b>τοπογραφικό</b>.",
+    "Έλεγξε πρώτα αν υπάρχει <b>κοινοτικός/αγροτικός δρόμος</b> κοντά (Δήμος) ή παλιά δουλεία διόδου στους τίτλους.",
+    "Αν όχι, ο νόμος (ΑΚ 1012 κ.ε.) σου δίνει δικαίωμα <b>δίοδου μέσω γειτονικού ακινήτου</b>, από το σημείο που βαρύνει λιγότερο τον γείτονα, έναντι <b>αποζημίωσης</b>.",
+    "Επιδίωξε <b>φιλικό διακανονισμό</b>: συμφωνία με τον γείτονα & σύσταση <b>συμβολαιογραφικής δουλείας διόδου</b> (καταχωρίζεται στο κτηματολόγιο).",
+    "Αν ο γείτονας αρνείται: <b>αγωγή</b> στο δικαστήριο για αναγνώριση δικαιώματος διόδου & καθορισμό αποζημίωσης (δικηγόρος).",
+    "Για <b>διάνοιξη/βελτίωση</b> αγροτικού δρόμου: αίτηση στον Δήμο· αν είναι δασική έκταση, έγκριση Δασαρχείου."
+  ],
+  docs:["Τοπογραφικό που δείχνει τον εγκλωβισμό","Τίτλοι ιδιοκτησίας δικοί σου & γειτόνων (όσο γίνεται)","Κτηματολογικά αποσπάσματα των εμπλεκόμενων","Τυχόν παλαιές πράξεις/δουλείες"],
+  who:["surveyor","lawyer","muni","notary","forest"],
+  warn:"Δεν ανοίγεις δρόμο μόνος σου μέσα σε ξένο χωράφι — είναι παράνομο. Η δίοδος συστήνεται με συμφωνία (συμβόλαιο) ή δικαστική απόφαση. Σε δασική έκταση χρειάζεσαι έγκριση Δασαρχείου."},
+
+ {id:"servitude", cat:"Πρόσβαση", icon:"↔️", title:"Σύσταση δουλείας (διόδου / νερού / διέλευσης)",
+  sub:"Νόμιμο, μόνιμο δικαίωμα διέλευσης πάνω σε γειτονικό ακίνητο",
+  cost:"Αμοιβή συμβολαιογράφου + αποζημίωση", time:"2–5 εβδομάδες", diff:"Μέτριο",
+  steps:[
+    "Συμφώνησε με τον ιδιοκτήτη του «δουλεύοντος» ακινήτου το <b>είδος & τη θέση</b> της δουλείας (τοπογραφικό δείχνει την όδευση).",
+    "Ο συμβολαιογράφος συντάσσει <b>πράξη σύστασης δουλείας</b> (με τυχόν αποζημίωση).",
+    "<b>Καταχώριση/μεταγραφή</b> στο κτηματολόγιο — ώστε να δεσμεύει και τους επόμενους ιδιοκτήτες.",
+    "Εναλλακτικά, δουλεία μπορεί να αποκτηθεί και με <b>χρησικτησία</b> (μακρόχρονη χρήση) — αποδεικνύεται δικαστικά."
+  ],
+  docs:["Τοπογραφικό με την όδευση","Τίτλοι των δύο ακινήτων","Κτηματολογικά αποσπάσματα"],
+  who:["notary","surveyor","lawyer","ktim"],
+  warn:"Προφορική συμφωνία με τον γείτονα ΔΕΝ αρκεί — χωρίς συμβόλαιο & καταχώριση, ο επόμενος ιδιοκτήτης μπορεί να σου κόψει τη δίοδο."},
+
+ {id:"boundaries", cat:"Πρόσβαση", icon:"📏", title:"Διαφορά ορίων με γείτονα",
+  sub:"Ασυμφωνία για το πού τελειώνει το χωράφι σου",
+  cost:"Τοπογραφικό + τυχόν δικαστικά", time:"Ποικίλλει", diff:"Μέτριο–Δύσκολο",
+  steps:[
+    "Ζήτα <b>τοπογραφικό ΕΓΣΑ87</b> και σύγκρισή του με τους τίτλους & το κτηματολόγιο.",
+    "Επιδίωξε <b>κοινή οριοθέτηση</b> με τον γείτονα (κοινός τοπογράφος) και υπογραφή πρακτικού.",
+    "Αν διαφωνείτε: <b>αγωγή διανομής/οριοθεσίας</b> ή διεκδικητική — με δικηγόρο.",
+    "Αν είναι λάθος στο κτηματολόγιο, παράλληλα κάνε <b>αίτηση διόρθωσης</b>."
+  ],
+  docs:["Τίτλοι κτήσης","Τοπογραφικό","Κτηματολογικά αποσπάσματα & των δύο","Μάρτυρες/παλαιά αεροφωτογραφία (βοηθητικά)"],
+  who:["surveyor","lawyer","ktim","court"],
+  warn:"Μη μετακινείς μόνος σύνορα/περιφράξεις σε αμφισβήτηση — μπορεί να θεωρηθεί αυτοδικία. Λύσε το με τοπογράφο & έγγραφη συμφωνία."},
+
+ {id:"legalize", cat:"Τακτοποίηση", icon:"🧾", title:"Τακτοποίηση τίτλων πριν οποιαδήποτε πράξη",
+  sub:"Παλιά χωράφια «του παππού» χωρίς συμβόλαια στο όνομά σου",
+  cost:"Ανά περίπτωση", time:"Μήνες", diff:"Δύσκολο",
+  steps:[
+    "Κάνε <b>ιστορικό τίτλων</b>: ποιος αγόρασε/κληρονόμησε, τι μεταγράφηκε, τι λείπει (δικηγόρος στο υποθηκοφυλακείο).",
+    "Αν λείπει <b>αποδοχή κληρονομιάς</b> προγόνου: γίνεται πρώτα αυτή (ίσως αλυσίδα αποδοχών).",
+    "Αν κατέχεις χωρίς τίτλο για δεκαετίες: εξέτασε <b>χρησικτασία</b> (τακτική 10ετία με τίτλο & καλή πίστη / έκτακτη 20ετία) — αναγνωρίζεται δικαστικά.",
+    "Τακτοποίησε <b>κτηματολόγιο & Ε9</b> ώστε να ταιριάζουν με την πραγματικότητα.",
+    "Μόνο αφού «καθαρίσουν» οι τίτλοι, προχώρα σε δωρεά/πώληση/γονική."
+  ],
+  docs:["Ό,τι παλιό συμβόλαιο/χαρτί υπάρχει","Πιστοποιητικά μεταγραφής","Ε9 & δηλώσεις","Μαρτυρίες/αποδείξεις κατοχής (για χρησικτησία)"],
+  who:["lawyer","notary","surveyor","doy","ktim"],
+  warn:"Χωρίς «καθαρούς» τίτλους, καμία μεταβίβαση/δωρεά δεν προχωρά. Αυτό είναι συχνά το πρώτο βήμα που ξεχνιέται — ξεκίνα από εδώ."}
+];
+
+const GLOSSARY = [
+  ["ΚΑΕΚ","Κωδικός Αριθμός Εθνικού Κτηματολογίου — μοναδικός αριθμός που ταυτοποιεί κάθε ακίνητο στο Κτηματολόγιο."],
+  ["Αντικειμενική αξία","Η φορολογητέα αξία ακινήτου βάσει επίσημων τιμών ζώνης/συντελεστών — βάση για φόρους."],
+  ["Γονική παροχή","Μεταβίβαση περιουσίας από γονέα σε τέκνο όσο ζει, φορολογικά ευνοϊκή (αφορολόγητο έως 800.000€ Α' κατηγορία)."],
+  ["Νόμιμη μοίρα","Το υποχρεωτικό ελάχιστο ποσοστό της κληρονομιάς που δικαιούνται στενοί συγγενείς (τέκνα/σύζυγος/γονείς) — δεν αποκληρώνονται ελεύθερα."],
+  ["Επικαρπία","Δικαίωμα χρήσης & καρπών ενός ακινήτου· η «ψιλή κυριότητα» ανήκει σε άλλον. Συχνά ο γονέας κρατά επικαρπία δίνοντας ψιλή κυριότητα στο παιδί."],
+  ["Ψιλή κυριότητα","Η κυριότητα χωρίς το δικαίωμα χρήσης/καρπών (όταν υπάρχει επικαρπία σε άλλον)."],
+  ["Δουλεία διόδου","Εμπράγματο δικαίωμα διέλευσης μέσω ξένου ακινήτου προς όφελος του δικού σου (ΑΚ 1012 κ.ε.)."],
+  ["Περίκλειστο ακίνητο","Ακίνητο χωρίς αναγκαία δίοδο προς δημόσιο δρόμο — δικαιούται δίοδο μέσω γείτονα έναντι αποζημίωσης."],
+  ["Χρησικτησία","Απόκτηση κυριότητας με μακρόχρονη νομή/κατοχή (τακτική 10ετία με τίτλο & καλή πίστη, έκτακτη 20ετία)."],
+  ["Μεταγραφή","Η καταχώριση της πράξης στο Υποθηκοφυλακείο (παλιό σύστημα) — ώστε να ισχύει έναντι τρίτων."],
+  ["Πρόδηλο σφάλμα","Προφανές λάθος στην κτηματολογική εγγραφή (π.χ. όνομα, στοιχεία) που διορθώνεται με απλή αίτηση."],
+  ["Αποδοχή κληρονομιάς","Η συμβολαιογραφική πράξη με την οποία ο κληρονόμος αποδέχεται & καταχωρίζει τα κληρονομιαία ακίνητα στο όνομά του."],
+  ["Κληρονομητήριο","Δικαστικό πιστοποιητικό που βεβαιώνει ποιος είναι κληρονόμος και σε ποιο ποσοστό."],
+  ["ΕΝΦΙΑ","Ενιαίος Φόρος Ιδιοκτησίας Ακινήτων — απαιτείται πιστοποιητικό ότι δηλώθηκε 5ετία πριν μεταβίβαση."],
+  ["ΦΜΑ","Φόρος Μεταβίβασης Ακινήτων — 3% επί της αξίας, στην αγοραπωλησία (τον πληρώνει ο αγοραστής)."],
+  ["ΕΓΣΑ87","Το επίσημο ελληνικό σύστημα συντεταγμένων για τα τοπογραφικά διαγράμματα."],
+  ["Δασικός χάρτης","Επίσημος χάρτης που καθορίζει αν μια έκταση είναι δασική ή όχι — κρίσιμο για δόμηση/μεταβίβαση."],
+  ["Αρτιότητα","Το ελάχιστο εμβαδό/διαστάσεις που πρέπει να έχει ένα οικόπεδο/αγροτεμάχιο για να δομείται."]
+];
+
+const HOME_TILES = ["gpar","inherit","road","will","ktim-fix","sale"];
+
+/* ============ RENDER ============ */
+function el(html){const d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+function go(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id===v));
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function procById(id){return PROCEDURES.find(p=>p.id===id);}
+
+function homeTiles(){
+  const c=document.getElementById('homeTiles');
+  c.innerHTML=HOME_TILES.map(id=>{const p=procById(id);
+    return `<div class="tile" onclick="openProc('${p.id}')"><div class="big">${p.icon}</div><h4>${p.title}</h4><p>${p.sub}</p></div>`}).join('');
+  const w=document.getElementById('homeWho');
+  w.innerHTML=Object.keys(PEOPLE).slice(0,8).map(k=>{const p=PEOPLE[k];
+    return `<div class="tile" onclick="go('dir');highlightWho('${k}')"><div class="big">${p.icon}</div><h4>${p.name}</h4><p>${p.role}</p></div>`}).join('');
+}
+
+function loadChk(){try{return JSON.parse(localStorage.getItem('gk_chk')||'{}')}catch(e){return{}}}
+function saveChk(o){localStorage.setItem('gk_chk',JSON.stringify(o))}
+
+function procCard(p){
+  const chk=loadChk();
+  const stepsH=p.steps.map(s=>`<li>${s}</li>`).join('');
+  const docsH=p.docs.map((d,i)=>{const key=p.id+'_'+i;const done=chk[key];
+    return `<div class="chk ${done?'done':''}" onclick="toggleChk('${key}',this)"><input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation()"><span>${d}</span></div>`}).join('');
+  const whoH=p.who.map(k=>`<div class="wtag" onclick="event.stopPropagation();go('dir');highlightWho('${k}')">${PEOPLE[k].icon} ${PEOPLE[k].name}</div>`).join('');
+  const seenL=new Set();
+  const linkKeys=p.who.filter(k=>PEOPLE[k].link&&!seenL.has(PEOPLE[k].link)&&seenL.add(PEOPLE[k].link));
+  const linksH=linkKeys.length?`<div class="block"><h4>🔗 Χρήσιμοι σύνδεσμοι <small style="color:var(--dim);font-weight:500;text-transform:none">(ανοίγουν online)</small></h4><ul class="plain">${linkKeys.map(k=>`<li><a href="${PEOPLE[k].link}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${PEOPLE[k].linkLabel}</a></li>`).join('')}</ul></div>`:'';
+  return `<div class="proc" id="proc_${p.id}">
+    <div class="proc-head" onclick="toggleProc('${p.id}')">
+      <div class="pem">${p.icon}</div>
+      <div><h3>${p.title}</h3><p>${p.sub}</p></div>
+      <div class="arr">▸</div>
+    </div>
+    <div class="proc-body">
+      <div class="tagrow">
+        <span class="tag">${p.cat}</span>
+        <span class="tag cost">💶 ${p.cost}</span>
+        <span class="tag time">⏱ ${p.time}</span>
+        <span class="tag diff">📊 ${p.diff}</span>
+      </div>
+      <div class="block"><h4>🪜 Βήματα</h4><ol class="steps">${stepsH}</ol></div>
+      <div class="block"><h4>📎 Δικαιολογητικά (checklist)</h4>${docsH}</div>
+      <div class="block"><h4>👥 Ποιους να βρεις</h4><div class="who">${whoH}</div></div>
+      ${linksH}
+      ${p.warn?`<div class="warn"><span class="wi">⚠️</span><div><b>Προσοχή:</b> ${p.warn}</div></div>`:''}
+      <div style="margin-top:16px"><button class="btn ghost sm" onclick="event.stopPropagation();printProc('${p.id}')">🖨️ Εκτύπωση / Αποθήκευση σε PDF</button></div>
+    </div>
+  </div>`;
+}
+
+function renderProcs(q=''){
+  q=(q||'').trim().toLowerCase();
+  const list=document.getElementById('procList');
+  const items=PROCEDURES.filter(p=>!q||(p.title+p.sub+p.cat+p.steps.join(' ')+p.docs.join(' ')).toLowerCase().includes(q));
+  list.innerHTML=items.length?items.map(procCard).join(''):`<div class="card">Δεν βρέθηκε διαδικασία για «${q}».</div>`;
+}
+function toggleProc(id){document.getElementById('proc_'+id).classList.toggle('open');}
+function toggleChk(key,node){const c=loadChk();c[key]=!c[key];saveChk(c);node.classList.toggle('done',c[key]);node.querySelector('input').checked=c[key];}
+function openProc(id){go('procs');renderProcs('');setTimeout(()=>{const n=document.getElementById('proc_'+id);if(n){n.classList.add('open');n.scrollIntoView({behavior:'smooth',block:'start'});}},60);}
+
+function printProc(id){
+  const p=procById(id);if(!p)return;
+  const esc=s=>s.replace(/</g,'&lt;');
+  const steps=p.steps.map((s,i)=>`<li><b>Βήμα ${i+1}.</b> ${s}</li>`).join('');
+  const docs=p.docs.map(d=>`<li>☐ ${d}</li>`).join('');
+  const who=p.who.map(k=>`<li><b>${PEOPLE[k].name}</b> — ${PEOPLE[k].role}${PEOPLE[k].link?` (${PEOPLE[k].link})`:''}</li>`).join('');
+  const html=`<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><title>${esc(p.title)}</title>
+  <style>
+    body{font-family:"Segoe UI",Arial,sans-serif;color:#111;max-width:720px;margin:28px auto;padding:0 20px;line-height:1.55}
+    h1{font-size:22px;margin:0 0 4px;border-bottom:3px solid #c0271e;padding-bottom:8px}
+    .sub{color:#555;margin:0 0 12px}
+    .meta{font-size:12px;color:#444;margin:10px 0 18px}
+    .meta span{display:inline-block;border:1px solid #ccc;border-radius:12px;padding:3px 10px;margin:0 6px 6px 0}
+    h2{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:#c0271e;border-left:4px solid #c0271e;padding-left:8px;margin:20px 0 8px}
+    ol,ul{margin:0;padding-left:20px} li{margin:5px 0}
+    ol.st{list-style:none;padding-left:0} ol.st li{margin:8px 0}
+    .warn{background:#fdeceb;border:1px solid #e6b3ae;border-radius:8px;padding:10px 12px;font-size:13px;color:#8a1a12;margin-top:12px}
+    .disc{margin-top:22px;font-size:11px;color:#777;border-top:1px solid #ddd;padding-top:10px}
+    @media print{.noprint{display:none}}
+  </style></head><body>
+  <h1>${p.icon} ${esc(p.title)}</h1>
+  <p class="sub">${esc(p.sub)}</p>
+  <div class="meta"><span>${p.cat}</span><span>💶 ${p.cost}</span><span>⏱ ${p.time}</span><span>📊 ${p.diff}</span></div>
+  <h2>Βήματα</h2><ol class="st">${steps}</ol>
+  <h2>Δικαιολογητικά</h2><ul>${docs}</ul>
+  <h2>Ποιους να βρεις</h2><ul>${who}</ul>
+  ${p.warn?`<div class="warn"><b>⚠️ Προσοχή:</b> ${p.warn}</div>`:''}
+  <div class="disc">ΓΗ &amp; ΚΛΗΡΟΝΟΜΙΑ 360° · Ενημερωτικό εργαλείο — δεν υποκαθιστά τη νομική συμβουλή δικηγόρου/συμβολαιογράφου/μηχανικού. Ποσά, φόροι & προθεσμίες μπορεί να έχουν αλλάξει· επιβεβαίωσε με τον αρμόδιο επαγγελματία & υπηρεσία.</div>
+  <div class="noprint" style="margin-top:20px;text-align:center"><button onclick="window.print()" style="padding:10px 18px;font-size:14px;background:#c0271e;color:#fff;border:none;border-radius:8px;cursor:pointer">🖨️ Εκτύπωση / Αποθήκευση PDF</button></div>
+  <script>setTimeout(()=>window.print(),400)<\/script>
+  </body></html>`;
+  const w=window.open('','_blank');
+  if(!w){alert('Επίτρεψε τα αναδυόμενα παράθυρα (pop-ups) για να ανοίξει η εκτύπωση.');return;}
+  w.document.write(html);w.document.close();
+}
+
+function renderDir(){
+  const c=document.getElementById('dirList');
+  const resH=`<div class="dir" style="grid-column:1/-1;border-color:var(--line2)">
+      <h3>🔗 Επίσημες πύλες &amp; υπηρεσίες <small style="font-size:12px;color:var(--dim);font-weight:500">(ανοίγουν online)</small></h3>
+      <div class="grid g3" style="margin-top:12px">
+        ${RESOURCES.map(r=>`<a href="${r.url}" target="_blank" rel="noopener" class="tile" style="text-decoration:none;color:inherit;display:block">
+            <div class="big">${r.icon}</div><h4 style="color:var(--amber2)">${r.name}</h4><p>${r.desc}</p></a>`).join('')}
+      </div></div>`;
+  const peopleH=Object.keys(PEOPLE).map(k=>{const p=PEOPLE[k];
+    return `<div class="dir" id="who_${k}">
+      <h3>${p.icon} ${p.name}</h3>
+      <div class="role">${p.role}</div>
+      <div class="block"><h4>Τι κάνει</h4><p style="margin:0;color:var(--txt);font-size:14px">${p.what}</p></div>
+      <div class="block"><h4>Πότε τον χρειάζεσαι</h4><p style="margin:0;color:var(--muted);font-size:13.5px">${p.when}</p></div>
+      <div class="block"><h4>Τι να ζητήσεις</h4><p style="margin:0;color:var(--muted);font-size:13.5px">${p.ask}</p></div>
+      ${p.link?`<div class="block"><h4>🔗 Σύνδεσμος</h4><a href="${p.link}" target="_blank" rel="noopener">${p.linkLabel}</a></div>`:''}
+    </div>`}).join('');
+  c.innerHTML=resH+peopleH;
+}
+function highlightWho(k){setTimeout(()=>{const n=document.getElementById('who_'+k);if(n){n.scrollIntoView({behavior:'smooth',block:'center'});n.style.borderColor='var(--red)';n.style.boxShadow='0 0 0 2px rgba(230,51,41,.4)';setTimeout(()=>{n.style.boxShadow='var(--shadow)';n.style.borderColor='';},1600);}},80);}
+
+function renderGlo(q=''){
+  q=(q||'').trim().toLowerCase();
+  const c=document.getElementById('gloList');
+  const items=GLOSSARY.filter(t=>!q||(t[0]+t[1]).toLowerCase().includes(q));
+  c.innerHTML=items.map(t=>`<div class="term"><b>${t[0]}</b><p>${t[1]}</p></div>`).join('');
+}
+
+/* ============ WIZARD ============ */
+const WIZ={
+  start:{q:"Τι σε απασχολεί με το χωράφι / κτήμα;",opts:[
+    {t:"Θέλω να το δώσω σε παιδί / συγγενή",i:"👨‍👧",go:"give"},
+    {t:"Κάποιος πέθανε — κληρονομιά",i:"⚰️",go:"death"},
+    {t:"Θέλει κτηματολόγιο ή έχει λάθος εγγραφή",i:"🗺️",go:"ktim"},
+    {t:"Δεν έχει δρόμο / πρόσβαση",i:"🛤️",go:"access"},
+    {t:"Θέλω να το πουλήσω ή να αγοράσω",i:"🏷️",r:"sale"},
+    {t:"Θέλω να αφήσω διαθήκη",i:"📝",r:"will"},
+    {t:"Παλιό, χωρίς σωστά χαρτιά στο όνομά μου",i:"🧾",r:"legalize"}
+  ]},
+  give:{q:"Με ποιον τρόπο θέλεις να το δώσεις;",opts:[
+    {t:"Στο παιδί μου, όσο ζω (φορολογικά ευνοϊκό)",i:"👨‍👧",r:"gpar"},
+    {t:"Δωρεά σε άλλο συγγενή ή τρίτο",i:"🎁",r:"donation"},
+    {t:"Να το πουλήσω",i:"🏷️",r:"sale"},
+    {t:"Να το αφήσω με διαθήκη (μετά θάνατον)",i:"📝",r:"will"}
+  ]},
+  death:{q:"Σε ποια φάση είσαι;",opts:[
+    {t:"Θέλω να κληρονομήσω/τακτοποιήσω το ακίνητο",i:"⚰️",r:"inherit"},
+    {t:"Δεν θέλω την κληρονομιά (πιθανά χρέη)",i:"🚫",r:"disclaim"},
+    {t:"Ψάχνω αν υπάρχει διαθήκη / πώς γράφεται",i:"📝",r:"will"},
+    {t:"Παλιά ακίνητα προγόνων χωρίς χαρτιά",i:"🧾",r:"legalize"}
+  ]},
+  ktim:{q:"Τι ισχύει;",opts:[
+    {t:"Δεν το έχω δηλώσει καθόλου / πρώτη εγγραφή",i:"🆕",r:"ktim-first"},
+    {t:"Υπάρχει λάθος (όνομα, όρια, εμβαδό, λάθος πρόσωπο)",i:"✏️",r:"ktim-fix"},
+    {t:"Διαφωνία ορίων με γείτονα",i:"📏",r:"boundaries"}
+  ]},
+  access:{q:"Τι από τα παρακάτω;",opts:[
+    {t:"Το χωράφι είναι εγκλωβισμένο (μεσολαβούν ξένα χωράφια)",i:"🛤️",r:"road"},
+    {t:"Θέλω μόνιμο δικαίωμα διέλευσης (δουλεία)",i:"↔️",r:"servitude"},
+    {t:"Διαφωνία με γείτονα για όρια/πέρασμα",i:"📏",r:"boundaries"}
+  ]}
+};
+let wizStack=['start'];
+function renderWiz(){
+  const node=WIZ[wizStack[wizStack.length-1]];
+  const area=document.getElementById('wizArea');
+  const crumbs=wizStack.length>1?`<div class="crumbs">${wizStack.map((s,i)=>`<span>${i===0?'Αρχή':'…'}</span>`).join('')} <button class="btn ghost sm" onclick="wizBack()">← Πίσω</button> <button class="btn ghost sm" onclick="wizReset()">↺ Απ' την αρχή</button></div>`:'';
+  area.innerHTML=`${crumbs}<div class="wiz-q"><h3>${node.q}</h3>${node.opts.map((o,i)=>
+    `<button class="opt" onclick="wizPick(${i})"><span class="oi">${o.i}</span><span>${o.t}${o.sub?`<small>${o.sub}</small>`:''}</span></button>`).join('')}</div>`;
+}
+function wizPick(i){
+  const node=WIZ[wizStack[wizStack.length-1]];
+  const o=node.opts[i];
+  if(o.r){openProc(o.r);}
+  else if(o.go){wizStack.push(o.go);renderWiz();}
+}
+function wizBack(){if(wizStack.length>1){wizStack.pop();renderWiz();}}
+function wizReset(){wizStack=['start'];renderWiz();}
+
+/* ============ CALCULATORS ============ */
+const fmt=n=>new Intl.NumberFormat('el-GR',{maximumFractionDigits:0}).format(Math.round(n));
+function progressive(base,brackets){ // brackets: [[amount,rate],...] amount=Infinity for last
+  let rem=base,tax=0,rows=[];
+  for(const[amt,rate]of brackets){
+    if(rem<=0)break;
+    const t=Math.min(rem,amt);
+    const tx=t*rate;
+    tax+=tx;rem-=t;
+    rows.push([t,rate,tx]);
+  }
+  return{tax,rows};
+}
+function calcGP(){
+  const val=+document.getElementById('gpVal').value||0;
+  const prev=+document.getElementById('gpPrev').value||0;
+  const free=800000;
+  const usedFree=Math.min(prev,free);
+  const remFree=Math.max(0,free-usedFree);
+  const taxable=Math.max(0,val-remFree);
+  const tax=taxable*0.10;
+  document.getElementById('gpRes').innerHTML=
+    `<div class="rl">Εκτιμώμενος φόρος</div><div class="rv">€ ${fmt(tax)}</div>
+     <table><tr><td>Αξία ακινήτου</td><td>€ ${fmt(val)}</td></tr>
+     <tr><td>Απομένον αφορολόγητο (Α')</td><td>€ ${fmt(remFree)}</td></tr>
+     <tr><td>Φορολογητέο ποσό</td><td>€ ${fmt(taxable)}</td></tr>
+     <tr><td>Συντελεστής (πάνω από αφορ.)</td><td>10%</td></tr></table>
+     <p style="color:var(--muted);font-size:12px;margin:8px 0 0">Α' κατηγορία (τέκνα/σύζυγος/γονείς): αφορολόγητο 800.000€ αθροιστικά. Δεν περιλαμβάνει έξοδα συμβολαίου.</p>`;
+}
+function calcKL(){
+  const val=+document.getElementById('klVal').value||0;
+  const cat=document.getElementById('klCat').value;
+  let free,brackets;
+  if(cat==='A'){free=150000;brackets=[[150000,0.01],[300000,0.05],[Infinity,0.10]];}
+  else if(cat==='B'){free=30000;brackets=[[70000,0.05],[200000,0.10],[Infinity,0.20]];}
+  else{free=6000;brackets=[[66000,0.20],[195000,0.30],[Infinity,0.40]];}
+  const taxable=Math.max(0,val-free);
+  const{tax,rows}=progressive(taxable,brackets);
+  const catName={A:"Α' (τέκνα/σύζυγος/γονείς)",B:"Β' (αδέλφια/ανίψια)",C:"Γ' (λοιποί/τρίτοι)"}[cat];
+  document.getElementById('klRes').innerHTML=
+    `<div class="rl">Εκτιμώμενος φόρος κληρονομιάς</div><div class="rv">€ ${fmt(tax)}</div>
+     <table><tr><td>Κατηγορία</td><td>${catName}</td></tr>
+     <tr><td>Αξία μεριδίου</td><td>€ ${fmt(val)}</td></tr>
+     <tr><td>Αφορολόγητο</td><td>€ ${fmt(free)}</td></tr>
+     <tr><td>Φορολογητέο</td><td>€ ${fmt(taxable)}</td></tr></table>
+     <p style="color:var(--muted);font-size:12px;margin:8px 0 0">Κλιμακωτός φόρος. Οι ακριβείς κλίμακες/αφορολόγητα ορίζονται από τον νόμο και μπορεί να αλλάξουν.</p>`;
+}
+function calcFMA(){
+  const val=+document.getElementById('fmaVal').value||0;
+  const tax=val*0.03;
+  document.getElementById('fmaRes').innerHTML=
+    `<div class="rl">Φόρος μεταβίβασης (3%)</div><div class="rv">€ ${fmt(tax)}</div>
+     <table><tr><td>Αξία μεταβίβασης</td><td>€ ${fmt(val)}</td></tr>
+     <tr><td>Συντελεστής ΦΜΑ</td><td>3%</td></tr></table>
+     <p style="color:var(--muted);font-size:12px;margin:8px 0 0">Τον πληρώνει ο αγοραστής. Επιπλέον υπάρχουν έξοδα συμβολαίου (δες διπλανό υπολογιστή).</p>`;
+}
+function calcEX(){
+  const val=+document.getElementById('exVal').value||0;
+  const notary=Math.max(100,val*0.008);      // ~0.8% ενδεικτικά
+  const lawyer=val*0.005;                     // ~0.5% ενδεικτικά
+  const ktimReg=val*0.005+20;                 // ~0.5% τέλη καταχώρισης
+  const survey=250;                           // ενδεικτικό
+  const total=notary+lawyer+ktimReg+survey;
+  document.getElementById('exRes').innerHTML=
+    `<div class="rl">Ενδεικτικά έξοδα (εκτός φόρου)</div><div class="rv">€ ${fmt(total)}</div>
+     <table><tr><td>Συμβολαιογράφος (~)</td><td>€ ${fmt(notary)}</td></tr>
+     <tr><td>Δικηγόρος (~)</td><td>€ ${fmt(lawyer)}</td></tr>
+     <tr><td>Τέλη κτηματολ./μεταγραφής (~)</td><td>€ ${fmt(ktimReg)}</td></tr>
+     <tr><td>Τοπογραφικό (~)</td><td>€ ${fmt(survey)}</td></tr></table>
+     <p style="color:var(--muted);font-size:12px;margin:8px 0 0">Πολύ χονδρική εκτίμηση — οι αμοιβές διαφέρουν. Ζήτα προσφορά.</p>`;
+}
+
+/* ============ INIT ============ */
+homeTiles();
+renderProcs('');
+renderDir();
+renderGlo('');
+renderWiz();
+calcGP();calcKL();calcFMA();calcEX();
+
+/* ---- PWA: register service worker (works over http(s)/localhost, not file://) ---- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{/* π.χ. αν ανοιχτεί ως file:// — αγνοείται */});
+  });
+}
+</script>
+</body>
+</html>
