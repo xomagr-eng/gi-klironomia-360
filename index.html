@@ -96,7 +96,16 @@
   .g2{grid-template-columns:repeat(2,1fr)}
   .g3{grid-template-columns:repeat(3,1fr)}
   .g4{grid-template-columns:repeat(4,1fr)}
-  @media(max-width:920px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  /* Στενή ΚΑΤΑΚΟΡΥΦΗ οθόνη: μία στήλη */
+  @media(max-width:920px) and (orientation:portrait){.g2,.g3,.g4{grid-template-columns:1fr}}
+  /* ΟΡΙΖΟΝΤΙΑ κινητό/tablet: μεγαλύτερη/πλατιά διάταξη με πολλές στήλες */
+  @media(orientation:landscape) and (max-width:1100px){
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(2,1fr)}
+    .g4{grid-template-columns:repeat(3,1fr)}
+    .hero{padding:22px}
+    .hero h2{font-size:26px}
+  }
 
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
   .card h3{font-size:16.5px;display:flex;align-items:center;gap:9px}
@@ -847,6 +856,20 @@ if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').catch(()=>{/* π.χ. αν ανοιχτεί ως file:// — αγνοείται */});
   });
 }
+</script>
+<script>
+/* === Συνδεδεμένες εφαρμογές & deep links (#proc=id, #q=...) === */
+(function(){
+  const GKISE='https://xomagr-eng.github.io/gkise-360/', NOMO='https://xomagr-eng.github.io/nomopyxida/';
+  function deep(){const h=decodeURIComponent(location.hash.slice(1));let m;
+    if((m=h.match(/^proc=([\w-]+)$/))&&typeof procById==='function'&&procById(m[1]))openProc(m[1]);
+    else if((m=h.match(/^q=(.+)$/))){go('procs');renderProcs(m[1]);}}
+  const home=document.getElementById('home');
+  if(home) home.insertAdjacentHTML('beforeend',`<div class="card" style="margin-top:14px"><h3 style="margin-top:0">🔗 Συνδεδεμένες εφαρμογές</h3>
+   <p><a href="${GKISE}" target="_blank" rel="noopener"><b>🏛️ ΓΚΙΣΕ 360°</b></a> — Κτηματολόγιο &amp; Υποθηκοφυλακεία, ΥΔΟΜ/Δασαρχείο, Εφορία (ΦΜΑ, κληρονομιά, γονική), δικαστήρια: δικαιολογητικά, κόστη, έντυπα.</p>
+   <p><a href="${NOMO}" target="_blank" rel="noopener"><b>⚖️ ΝΟΜΟΠΥΞΙΔΑ 360°</b></a> — το νομικό πλαίσιο: Αστικός Κώδικας, κληρονομικό, εμπράγματο, πρότυπα.</p></div>`);
+  deep(); window.addEventListener('hashchange',deep);
+})();
 </script>
 </body>
 </html>
