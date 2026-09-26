@@ -1,5 +1,5 @@
 /* ΓΗ & ΚΛΗΡΟΝΟΜΙΑ 360° — Service Worker (offline cache) */
-const CACHE = 'gi360-v1';
+const CACHE = 'gi360-v2';
 const ASSETS = [
   './',
   './index.html',
