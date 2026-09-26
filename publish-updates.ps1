@@ -2,7 +2,9 @@
 # Run manually anytime, or weekly via the scheduled task "GH360-WeeklyPublish".
 # Commits any local changes in this folder and pushes them. Does nothing if unchanged.
 
-$ErrorActionPreference = "Stop"
+# Continue (not Stop): git writes normal progress to stderr and WinPS 5.1 would
+# otherwise treat that as a terminating error. We check $LASTEXITCODE instead.
+$ErrorActionPreference = "Continue"
 $root = $PSScriptRoot
 $log  = Join-Path $root "publish.log"
 
@@ -32,9 +34,10 @@ try {
   & $git -c user.name="Chronis Makris" -c user.email="xoma.gr@gmail.com" commit -m $msg | Out-Null
   Log ("Committed: " + $msg)
 
-  # Sync with remote first (in case it changed elsewhere), then push
-  & $git pull --rebase origin main 2>&1 | Out-Null
-  & $git push origin main
+  # Sync with remote first (in case it changed elsewhere), then push.
+  # Discard stderr progress text so WinPS does not mistake it for an error.
+  & $git pull --rebase origin main 2>$null 1>$null
+  & $git push origin main 2>$null 1>$null
   if ($LASTEXITCODE -eq 0) {
     Log "Pushed to GitHub OK. GitHub Pages will rebuild in ~1-2 min."
   } else {
